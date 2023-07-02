@@ -1,0 +1,211 @@
+#:import Window kivy.core.window.Window
+#:import chex kivy.utils.get_color_from_hex
+
+
+MainWindow:
+	
+	tourer_screen : tourer_screen
+	tourer_activity : tourer_activity
+	action_list : action_list
+	
+	title_1 : title_1
+	title_2 : title_2
+	
+	# Image
+	Image :
+		source : "room.jpeg"
+		keep_ratio : False
+		allow_stretch : True
+	
+	# Title
+	TitleLabel:
+		id : title_1
+		size_hint : 1 , 1
+		pos_hint :	{ "center_x":0.5 , "center_y": 0.55 }
+	
+	TitleLabel:
+		id : title_2
+		size_hint : 1 , 1
+		pos_hint :	{ "center_x":0.5 , "center_y": 0.558 }
+		color : chex("#840C08")
+		
+	# Action Widgets
+	BoxLayout:
+		size_hint : 1 , 1
+		pos_hint :	{ "center_x":0.5 , "center_y": 0.5 }
+		orientation : "vertical"
+		spacing : dp(4)
+		padding : dp(5)
+		
+		TourerScreen:
+			id : tourer_screen
+			size_hint : 1 , 0.75
+		
+		TourerActivity :
+			id : tourer_activity
+			size_hint : 1 , 0.1
+			
+		ActionList:
+			id : action_list
+			size_hint : 1 , 0.15
+		
+
+<TourerScreen>:
+	opacity : 0
+	name_holder : name_holder
+	
+	FloatLayout:
+		size_hint : 0.25 , 1 
+		
+		Widget :
+			size_hint : 1 , 1
+			pos_hint : { "center_x" : .5 , "center_y" : .5 }
+		
+		CustomNamePlaceHolder :
+			id : name_holder
+			size_hint : 0.9 , None
+			height : dp(30)
+			pos_hint : { "center_x" : 0.5 , "y" :  0}
+			text : "H E A R T"
+	
+	ScrollView:
+		
+		canvas.before:
+			Color:
+				rgb : chex("#5E0000")
+				a : 0.7
+			RoundedRectangle:
+				pos : self.pos
+				size : self.size
+				radius : ( 0 , 80 , 80 , 0)
+		
+		size_hint : 0.75 , 1
+		always_overscroll : False
+		do_scroll_y : True
+		do_scroll_x : False
+		
+		MDBoxLayout:
+			adaptive_height : True
+			padding : [ dp(10) , dp(20) , dp(25) , dp(15)]
+			
+			TourerDialogLabel:
+				text : "What is your favorite food" + "[font=font_Obli] Mango Shake [/font]"
+	
+			
+
+<TourerActivity>:
+	
+	TourerActivityButton:
+		size_hint: 0.15 , 1
+		text : "T A L K"
+		opacity : 1 if not root.talking else 0
+		disabled : root.talking
+		
+		on_release:
+			root.talking = not root.talking
+	
+	Widget :
+		size_hint : 0.25 , 1
+	
+	TourerActivityButton:
+		size_hint : 0.2 , 1
+		text : "START TOUR"
+		font_name : "font_bold"
+		font_size : min(self.size) * 0.54
+		opacity : 1 if not root.start_tour else 0
+		disabled : root.start_tour
+		
+		on_release:
+			root.start_tour = not root.start_tour
+	
+	Widget :
+		size_hint : 0.25 , 1
+	
+	TourerActivityButton:
+		size_hint : 0.15 , 1
+		text : "C L O S E"
+		opacity : 1 if root.talking else 0
+		disabled : not root.talking
+		
+		on_release:
+			root.talking = not root.talking
+		
+
+<ActionList>:
+	
+	canvas.before:
+		Color:
+			rgba : chex("#AB0E0E")
+			a : 0.25
+		RoundedRectangle:
+			pos : self.pos
+			size: self.size
+			radius : (16,)
+	
+	do_scroll_y : False
+	do_scroll_x : True
+	opacity : 0
+	
+	button_list : button_list
+	
+	MDGridLayout:
+		id : button_list
+		adaptive_width: True
+		rows : 1
+		spacing : dp(2)
+		padding : dp(5)
+		
+#		CustomActionButton:
+#			text : "Room 515"
+			
+#		CustomActionButton:
+#			text : "Audio-Visual Room"
+
+
+<TourerDialogLabel@Label> :
+	size_hint : 1 , None
+	text_size: self.width, None
+	height: self.texture_size[1]
+	markup : True
+	font_name : "font_book"
+	font_size : min(Window.size) * 0.05
+
+<TitleLabel@Label>:
+	font_name : "azonix"
+	font_size : min(self.size) * 0.1
+	color : chex("#ECEAEA")
+	halign : "center"
+	text : "Computer Science Building\n\nTour App"
+	
+
+<CustomNamePlaceHolder@Label>:
+	canvas.before :
+		Color:
+			rgba : chex("#5E0000")
+			a : 0.5
+		RoundedRectangle:
+			size : self.size
+			pos : self.pos
+			radius : (24,)
+			
+	color : chex("#ECEAEA")
+	font_size : min(self.size) * 0.6
+	font_name : "font_book_reg"
+	
+	
+
+<CustomActionButton>:
+	size_hint : None , 1
+	md_bg_color : chex("#5E0000")
+	text_color : chex("#ECEAEA")
+	font_size : min(self.size) * 0.35
+	font_name : "font_book"
+		
+<TourerActivityButton@MDRaisedButton>:
+	md_bg_color : chex("#66090A")
+	text_color : chex("#ECEAEA")
+	font_name : "font_Obli"
+	font_size : min(self.size) * 0.5
+	
+	
+	
