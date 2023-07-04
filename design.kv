@@ -13,7 +13,7 @@ MainWindow:
 	
 	# Image
 	Image :
-		source : "room.jpeg"
+		source : "Rooms/Building.jpeg"
 		keep_ratio : False
 		allow_stretch : True
 	
@@ -52,14 +52,21 @@ MainWindow:
 
 <TourerScreen>:
 	opacity : 0
+	
 	name_holder : name_holder
+	dialog : dialog
+	tourer_picture : tourer_picture
 	
 	FloatLayout:
 		size_hint : 0.25 , 1 
 		
-		Widget :
+		Image :
+			id : tourer_picture
 			size_hint : 1 , 1
 			pos_hint : { "center_x" : .5 , "center_y" : .5 }
+			keep_ratio : False
+			keep_data : True
+			
 		
 		CustomNamePlaceHolder :
 			id : name_holder
@@ -89,6 +96,7 @@ MainWindow:
 			padding : [ dp(10) , dp(20) , dp(25) , dp(15)]
 			
 			TourerDialogLabel:
+				id : dialog
 				text : "What is your favorite food" + "[font=font_Obli] Mango Shake [/font]"
 	
 			
@@ -200,6 +208,9 @@ MainWindow:
 	text_color : chex("#ECEAEA")
 	font_size : min(self.size) * 0.35
 	font_name : "font_book"
+	
+	on_release:
+		self.activity(self.text)
 		
 <TourerActivityButton@MDRaisedButton>:
 	md_bg_color : chex("#66090A")
