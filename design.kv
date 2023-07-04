@@ -1,22 +1,22 @@
 #:import Window kivy.core.window.Window
 #:import chex kivy.utils.get_color_from_hex
-
+#:import ew kivy.uix.effectwidget
 
 MainWindow:
 	
 	tourer_screen : tourer_screen
 	tourer_activity : tourer_activity
 	action_list : action_list
+	building_picture : building_picture
 	
 	title_1 : title_1
 	title_2 : title_2
 	
 	# Image
-	Image :
-		source : "Rooms/Building.jpeg"
-		keep_ratio : False
-		allow_stretch : True
-	
+	BuildingPicture:
+		id : building_picture
+		size_hint : 1 , 1
+		
 	# Title
 	TitleLabel:
 		id : title_1
@@ -26,7 +26,7 @@ MainWindow:
 	TitleLabel:
 		id : title_2
 		size_hint : 1 , 1
-		pos_hint :	{ "center_x":0.5 , "center_y": 0.558 }
+		pos_hint :	{ "center_x":0.5 , "center_y": 0.557 }
 		color : chex("#840C08")
 		
 	# Action Widgets
@@ -48,6 +48,16 @@ MainWindow:
 		ActionList:
 			id : action_list
 			size_hint : 1 , 0.15
+		
+
+<BuildingPicture@EffectWidget>:
+	effects: ew.HorizontalBlurEffect(size=self.parent.size_effect), ew.VerticalBlurEffect(size=self.parent.size_effect)
+	picture : picture
+	
+	Image :
+		id : picture
+		keep_ratio : False
+		allow_stretch : True
 		
 
 <TourerScreen>:
@@ -97,7 +107,7 @@ MainWindow:
 			
 			TourerDialogLabel:
 				id : dialog
-				text : "What is your favorite food" + "[font=font_Obli] Mango Shake [/font]"
+				text : "What is your favorite food" + "[font=font_book] Mango Shake [/font]"
 	
 			
 
@@ -125,6 +135,7 @@ MainWindow:
 		
 		on_release:
 			root.start_tour = not root.start_tour
+			root.start_acitivity("Ground Floor")
 	
 	Widget :
 		size_hint : 0.25 , 1
@@ -170,17 +181,18 @@ MainWindow:
 #			text : "Audio-Visual Room"
 
 
+
 <TourerDialogLabel@Label> :
 	size_hint : 1 , None
 	text_size: self.width, None
 	height: self.texture_size[1]
 	markup : True
-	font_name : "font_book"
+	font_name : "font_book_reg"
 	font_size : min(Window.size) * 0.05
 
 <TitleLabel@Label>:
 	font_name : "azonix"
-	font_size : min(self.size) * 0.1
+	font_size : min(Window.size) * 0.1
 	color : chex("#ECEAEA")
 	halign : "center"
 	text : "Computer Science Building\n\nTour App"
