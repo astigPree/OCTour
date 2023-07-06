@@ -12,7 +12,7 @@ from kivy.uix.image import Image
 from kivy.uix.effectwidget import EffectWidget
 from kivy.uix.modalview import ModalView
 
-from kivy.properties import ObjectProperty , BooleanProperty, NumericProperty , DictProperty , ListProperty 
+from kivy.properties import ObjectProperty , StringProperty ,BooleanProperty, NumericProperty , DictProperty , ListProperty 
 from kivy.lang.builder import Builder
 from kivy.core.text import LabelBase
 from kivy.clock import Clock
@@ -68,8 +68,8 @@ class ActionList(ScrollView):
 			self.parent_activity(text)
 
 class ExitWidget(ModalView):
-	pass
-
+	image : str = StringProperty("")
+	
 class MainWindow(FloatLayout):
 	tourer_screen : TourerScreen = ObjectProperty()
 	tourer_activity : TourerActivity = ObjectProperty()
@@ -93,7 +93,9 @@ class MainWindow(FloatLayout):
 		
 	def load_all_data(self , _ ):
 		# set the Exit Widget
+		filename = os.path.join("Tourers" , "all_devs.jpg")
 		self.exit_popup = ExitWidget()
+		self.exit_popup.image += filename
 		
 		# set the Command In Action List and Tourer Activity
 		self.action_list.parent_activity = self.change_location
