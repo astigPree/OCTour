@@ -10,8 +10,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.effectwidget import EffectWidget
+from kivy.uix.modalview import ModalView
 
-from kivy.properties import ObjectProperty , BooleanProperty, StringProperty , NumericProperty , DictProperty , ListProperty 
+from kivy.properties import ObjectProperty , BooleanProperty, NumericProperty , DictProperty , ListProperty 
 from kivy.lang.builder import Builder
 from kivy.core.text import LabelBase
 from kivy.clock import Clock
@@ -65,12 +66,15 @@ class ActionList(ScrollView):
 		if not self.ready_to_change:
 			Clock.schedule_once(ready_to_change , 0.2)
 			self.parent_activity(text)
-			
+
+class ExitWidget(ModalView):
+	pass
 
 class MainWindow(FloatLayout):
 	tourer_screen : TourerScreen = ObjectProperty()
 	tourer_activity : TourerActivity = ObjectProperty()
 	action_list : ActionList = ObjectProperty()
+	exit_popup : ExitWidget = ObjectProperty()
 	
 	building_picture : EffectWidget = ObjectProperty()
 	size_effect = NumericProperty(8.0)
@@ -78,38 +82,44 @@ class MainWindow(FloatLayout):
 	title_1 : Label = ObjectProperty()
 	title_2 : Label = ObjectProperty()
 	
-	buidings_info : dict = ObjectProperty({})
-	selections : dict = ObjectProperty({})
-	tourers : list = ObjectProperty([])
+	buidings_info : dict = DictProperty({})
+	selections : dict = DictProperty({})
+	tourers : list = ListProperty([])
+	
 	
 	def on_kv_post(self , _ ):
-		#Clock.schedule_once(self.load_all_data )
+		Clock.schedule_once(self.load_all_data )
 		Clock.schedule_interval(self.update , 1 / 30)
 		
 	def load_all_data(self , _ ):
+		# set the Exit Widget
+		self.exit_popup = ExitWidget()
+		
 		# set the Command In Action List and Tourer Activity
 		self.action_list.parent_activity = self.change_location
 		self.tourer_activity.start_acitivity = self.change_location
 		
 		# display the Mahogany Building
-		self.update_display_image( image=os.path.join("Rooms", "Building.jpeg"))
+		self.building_picture.picture.source = os.path.join("Rooms", "Building.jpeg")
 		
 		# load tourers in update the TourerScreen
-		filename = ""
+		filename = os.path.join("Tourers" , "tourer.json")
 		with open(filename , "r") as jf:
 			for tourer in json.load(jf):
 				self.tourers.append(tourer)
-		tourer = random.choices(self.tourers , k= 1 , cum_weights=[40 , 20 , 20 , 20])
-		self.tourer_screen.update(name_holder=tourer["name"] , dialog=tourer["introduction"] , picture=tourer["picture"] )
+		
+		selected = random.choices(self.tourers , weights=[.25 , .25, .25, .25] )
+		tourer = selected[0]
+		self.tourer_screen.update(name_holder=tourer["name"] , dialog=tourer["intro"] , picture=tourer["picture"] )
 		
 		# load Selection Building 
-		filename = ""
+		filename = os.path.join("Rooms" , "building_selection.json")
 		with open( filename , "r") as jf :
 			for key , values in json.load(jf).items() :
 				self.selections[key] = values
 		
 		# load Building Information
-		filename = ""
+		filename = os.path.join("Rooms" , "building_information.json")
 		with open( filename , "r") as jf :
 			for key , values in json.load(jf).items() :
 				self.buidings_info[key] = values
@@ -139,7 +149,7 @@ class MainWindow(FloatLayout):
 				self.action_list.opacity = 1
 	
 	def update_display_image(self , image : str):
-		folder = ""
+		folder = "Rooms"
 		self.building_picture.picture.source = os.path.join(folder , self.buidings_info[image][0])
 	
 	def change_location(self , location : str):
@@ -150,6 +160,16 @@ class MainWindow(FloatLayout):
 
 class OCTourApp(MDApp):
 	
+	def on_start(self):
+	   from kivy.base import EventLoop
+	   EventLoop.window.bind(on_keyboard=self.hook_keyboard)
+
+	def hook_keyboard(self, window, key, *largs):
+		if key == 27:
+		     if self.root.exit_popup :
+		     	self.root.exit_popup.open()
+		     return True
+       
 	def build(self):
 		return Builder.load_file("design.kv")
 
