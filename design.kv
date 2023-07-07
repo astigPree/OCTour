@@ -8,6 +8,7 @@ MainWindow:
 	tourer_activity : tourer_activity
 	action_list : action_list
 	building_picture : building_picture
+	building_floor_widget : building_floor_widget
 	
 	title_1 : title_1
 	title_2 : title_2
@@ -28,6 +29,12 @@ MainWindow:
 		size_hint : 1 , 1
 		pos_hint :	{ "center_x":0.5 , "center_y": 0.557 }
 		color : chex("#840C08")
+	
+	# Floor Location
+	BuildingFloorWidget:
+		id : building_floor_widget
+		pos_hint : { "right" : 0.988 , "top" : 0.988 }
+		size_hint : 0.1 , 0.2
 		
 	# Action Widgets
 	BoxLayout:
@@ -229,6 +236,59 @@ MainWindow:
 				on_release:
 					root.dismiss()
 
+
+<BuildingFloorWidget>:
+	canvas.before:
+		Color:
+			rgb : chex("#5E0000")
+			a : 0.6
+		RoundedRectangle:
+			pos : self.pos
+			size : self.size
+			radius : (20,)
+	
+	orientation : "vertical"
+	padding : dp(2)
+	opacity : 0
+	
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[5] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Sixth Floor"
+			
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[4] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Fifth Floor"
+			
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[3] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Fourth Floor"
+			
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[2] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Third Floor"
+			
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[1] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Second Floor"
+			
+	BuildingFloorWidgetContainer:
+		md_bg_color : chex("#B70104") if root.floors[0] == root.current_floor else (0 , 0 , 0, 0)
+		BuildingFloorWidgetLabel:
+			text : "Ground Floor"
+
+		
+<BuildingFloorWidgetContainer@MDBoxLayout>:
+	radius : (16,)
+
+<BuildingFloorWidgetLabel@Label>:
+	font_name : "azonix"
+	font_size : min(self.size) * 0.5
+	
 
 <TourerDialogLabel@Label> :
 	size_hint : 1 , None

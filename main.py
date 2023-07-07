@@ -3,7 +3,6 @@ from kivymd.app import MDApp
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.button import MDRaisedButton
 
-
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
@@ -20,6 +19,10 @@ from kivy.clock import Clock
 import json
 import random
 import os
+
+class BuildingFloorWidget(BoxLayout):
+	floors : list = ListProperty([ "Ground Floor" , "Second Floor" , "Third Floor" , "Fourth Floor" , "Fifth Floor" , "Sixth Floor"])
+	current_floor : str = StringProperty("Ground Floor")
 
 class TourerScreen(BoxLayout):
 	name_holder : Label = ObjectProperty()
@@ -75,6 +78,7 @@ class MainWindow(FloatLayout):
 	tourer_activity : TourerActivity = ObjectProperty()
 	action_list : ActionList = ObjectProperty()
 	exit_popup : ExitWidget = ObjectProperty()
+	building_floor_widget : BuildingFloorWidget = ObjectProperty()
 	
 	building_picture : EffectWidget = ObjectProperty()
 	size_effect = NumericProperty(8.0)
@@ -85,7 +89,7 @@ class MainWindow(FloatLayout):
 	buidings_info : dict = DictProperty({})
 	selections : dict = DictProperty({})
 	tourers : list = ListProperty([])
-	
+	current_floor : str = StringProperty("")
 	
 	def on_kv_post(self , _ ):
 		Clock.schedule_once(self.load_all_data )
@@ -138,6 +142,13 @@ class MainWindow(FloatLayout):
 		# MAIN ACTIVITY
 		if self.tourer_activity.start_tour:
 			
+			# check the current floor and update the BuildingFloorWidget
+			if not self.building_floor_widget.opacity:
+				self.building_floor_widget.opacity = 1
+			if self.current_floor in self.building_floor_widget.floors:
+				self.building_floor_widget.current_floor = self.current_floor
+			self.building_floor_widget.opacity = 0 if self.tourer_activity.talking else 1
+			
 			# blur the image when tourer talking
 			self.size_effect = 8.0 if self.tourer_activity.talking else 0.0
 			
@@ -155,6 +166,7 @@ class MainWindow(FloatLayout):
 		self.building_picture.picture.source = os.path.join(folder , self.buidings_info[image][0])
 	
 	def change_location(self , location : str):
+		self.current_floor = location
 		self.update_display_image(location)
 		self.tourer_screen.update(dialog=self.buidings_info[location][1])
 		self.action_list.update(rooms=self.selections[location])
