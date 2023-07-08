@@ -15,6 +15,7 @@ from kivy.properties import ObjectProperty , StringProperty ,BooleanProperty, Nu
 from kivy.lang.builder import Builder
 from kivy.core.text import LabelBase
 from kivy.clock import Clock
+from kivy.animation import Animation
 
 import json
 import random
@@ -61,6 +62,8 @@ class ActionList(ScrollView):
 			widget.text = room
 			widget.activity = self.action
 			self.button_list.add_widget(widget)
+		for child in self.button_list.children:
+			Animation(opacity = 1 , duration = .6).start(child)
 	
 	def action(self , text : str):
 		def ready_to_change( _ ):
@@ -77,7 +80,7 @@ class MainWindow(FloatLayout):
 	tourer_screen : TourerScreen = ObjectProperty()
 	tourer_activity : TourerActivity = ObjectProperty()
 	action_list : ActionList = ObjectProperty()
-	exit_popup : ExitWidget = ObjectProperty()
+	exit_popup : ExitWidget = ObjectProperty(None)
 	building_floor_widget : BuildingFloorWidget = ObjectProperty()
 	
 	building_picture : EffectWidget = ObjectProperty()
