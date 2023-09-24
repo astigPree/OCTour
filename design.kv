@@ -62,6 +62,14 @@ MainWindow:
 	picture : picture
 	
 	Image :
+		
+		canvas.before:
+			Color:
+				rgb : 0 , 0 , 0
+			Rectangle:
+				pos : self.pos
+				size : self.size
+		
 		id : picture
 		keep_ratio : False
 		allow_stretch : True

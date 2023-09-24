@@ -132,7 +132,7 @@ class MainWindow(FloatLayout):
 		with open( filename , "r") as jf :
 			for key , values in json.load(jf).items() :
 				self.buidings_info[key] = values
-		
+
 	def update(self , _ ):
 		# remove TourerScreen if not talking
 		self.tourer_screen.opacity = 0 if not self.tourer_activity.talking else 1
@@ -166,12 +166,12 @@ class MainWindow(FloatLayout):
 	
 	def update_display_image(self , image : str):
 		folder = "Rooms"
-		self.building_picture.picture.source = os.path.join(folder , self.buidings_info[image][0])
+		self.building_picture.picture.source = os.path.join(folder , self.buidings_info[self.tourer_screen.name_holder.text][image][0])
 	
 	def change_location(self , location : str):
 		self.current_floor = location
 		self.update_display_image(location)
-		self.tourer_screen.update(dialog=self.buidings_info[location][1])
+		self.tourer_screen.update(dialog=self.buidings_info[self.tourer_screen.name_holder.text][location][1])
 		self.action_list.update(rooms=self.selections[location])
 		
 
