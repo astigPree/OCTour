@@ -16,6 +16,8 @@ from kivy.lang.builder import Builder
 from kivy.core.text import LabelBase
 from kivy.clock import Clock
 from kivy.animation import Animation
+from kivy.core.audio import SoundLoader
+	   
 
 import json
 import random
@@ -177,9 +179,19 @@ class MainWindow(FloatLayout):
 
 class OCTourApp(MDApp):
 	
+	sound : SoundLoader = ObjectProperty()
+	
 	def on_start(self):
 	   from kivy.base import EventLoop
 	   EventLoop.window.bind(on_keyboard=self.hook_keyboard)
+	   
+	   self.sound = SoundLoader.load("background_song.mp3")  # Load audio file in the background
+	   if self.sound:
+	   	print(self.sound)
+	   	self.sound.loop = True
+	   	self.sound.volume = .9
+	   	self.sound.play()
+
 
 	def hook_keyboard(self, window, key, *largs):
 		if key == 27:
