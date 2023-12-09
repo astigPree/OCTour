@@ -50,13 +50,13 @@ requirements = python3crystax==3.6,kivy
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = presplash.jpg
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/data/icon512x512.png
+icon.filename = icon512x512.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
-orientation = portrait
+orientation = landscape
 
 # (list) List of service to declare
 #services = NAME:ENTRYPOINT_TO_PY,NAME2:ENTRYPOINT2_TO_PY
