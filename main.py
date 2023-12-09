@@ -78,6 +78,7 @@ class ActionList(ScrollView):
 class ExitWidget(ModalView):
 	image : str = StringProperty("")
 	
+	
 class MainWindow(FloatLayout):
 	tourer_screen : TourerScreen = ObjectProperty()
 	tourer_activity : TourerActivity = ObjectProperty()
@@ -102,9 +103,9 @@ class MainWindow(FloatLayout):
 		
 	def load_all_data(self , _ ):
 		# set the Exit Widget
-		filename = os.path.join("Tourers" , "all_devs.jpg")
+		filename = os.path.join("Tourers" , "all_devs.png")
 		self.exit_popup = ExitWidget()
-		self.exit_popup.image += filename
+		self.exit_popup.image = filename
 		
 		# set the Command In Action List and Tourer Activity
 		self.action_list.parent_activity = self.change_location

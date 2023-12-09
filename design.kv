@@ -83,7 +83,7 @@ MainWindow:
 	tourer_picture : tourer_picture
 	
 	FloatLayout:
-		size_hint : 0.25 , 1 
+		size_hint : 0.3 , 1 
 		
 		Image :
 			id : tourer_picture
@@ -91,6 +91,7 @@ MainWindow:
 			pos_hint : { "center_x" : .5 , "center_y" : .5 }
 			keep_ratio : False
 			keep_data : True
+			allow_stretch : True
 			
 		
 		CustomNamePlaceHolder :
@@ -99,6 +100,7 @@ MainWindow:
 			height : dp(30)
 			pos_hint : { "center_x" : 0.5 , "y" :  0}
 			text : "H E A R T"
+			font_name : "font_bold"
 	
 	ScrollView:
 		
@@ -111,7 +113,7 @@ MainWindow:
 				size : self.size
 				radius : ( 0 , 80 , 80 , 0)
 		
-		size_hint : 0.75 , 1
+		size_hint : 0.7 , 1
 		always_overscroll : False
 		do_scroll_y : True
 		do_scroll_x : False
@@ -197,8 +199,8 @@ MainWindow:
 	FloatLayout:
 		
 		Image :
-			size_hint : 0.6 , 0.4
-			pos_hint : { "center_x" : 0.5 , "y" : .42 }
+			size_hint : 0.6 , 0.8
+			pos_hint : { "center_x" : 0.5 , "y" : .37 }
 			source : root.image
 			keep_data : True
 			keep_ratio : False
@@ -208,7 +210,6 @@ MainWindow:
 			canvas.before:
 				Color:
 					rgba : chex("#AB0E0E")
-					a : 0.8
 				RoundedRectangle:
 					pos : self.pos
 					size: self.size
@@ -216,7 +217,7 @@ MainWindow:
 					
 			size_hint : 0.8 , 0.2
 			pos_hint : { "center_x" : 0.5 , "top" : .45 }
-			text : "Seryuso? Iiwanan mo na kami? Ganon lang yun kadali sayo? :'<"
+			text : "Salamat sa pag-sama sa aming paglakbay!, May nakalimutan kaba? Tara puntahan natin uli"
 			font_size : min(self.size) * 0.3
 			font_name : "font_Obli"
 			halign : "center"
@@ -227,7 +228,7 @@ MainWindow:
 			spacing : dp(10)
 			
 			TourerActivityButton:
-				text : "Oo"
+				text : "Wala"
 				size_hint : 0.5 , 1
 				font_size : min(self.size) * 0.5
 				font_name : "font_bold"
@@ -236,7 +237,7 @@ MainWindow:
 					app.stop()
 			
 			TourerActivityButton:
-				text : "Hindi"
+				text : "Tara"
 				size_hint : 0.5 , 1
 				font_size : min(self.size) * 0.5
 				font_name : "font_bold"
