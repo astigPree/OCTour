@@ -7,8 +7,11 @@ OC TOUR is a mobile application designed to showcase the Computer Science depart
 OC TOUR boasts a user-friendly interface that makes it easy to navigate and understand.
 
 ## Images
+### UI/UX Opening The OC Tour Application
 ![Image 1](App_Images/home.png)
+### UI/UX Entering The OC Tour Application
 ![Image 2](App_Images/enter.png)
+### UI/UX Asking The Guide What Is The Current Floor/Room In OC Tour Application
 ![Image 3](App_Images/guide.png)
 
 ## Technology Stack
