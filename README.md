@@ -7,9 +7,9 @@ OC TOUR is a mobile application designed to showcase the Computer Science depart
 OC TOUR boasts a user-friendly interface that makes it easy to navigate and understand.
 
 ## Images
-![Image 1](image1.png)
-![Image 2](image2.png)
-![Image 3](image3.png)
+![Image 1](App_Images/home.png)
+![Image 2](App_Images/enter.png)
+![Image 3](App_Images/guide.png)
 
 ## Technology Stack
 - **Programming Language:** Python
